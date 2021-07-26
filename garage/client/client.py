@@ -29,7 +29,7 @@ class DoorClient:
 
     def on_message(self, ws_app, message):
         log.info(f"Received message: {message}")
-        self._activate_door()
+        self._handle_message(message)
 
     def on_error(self, ws_app, error):
         log.error(error)
@@ -56,6 +56,11 @@ class DoorClient:
         # otherwise
         payload["created"] = str(int(time.time()))
         return payload
+
+
+    def _handle_message(self, message):
+        self._activate_door()
+
 
     def _activate_door(self):
         self._garage_door.all_on()
