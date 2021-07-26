@@ -5,10 +5,10 @@ import logging
 import asyncio
 import collections
 
+from common.messages import Messages
+
 from websockets.exceptions import ConnectionClosedOK
 from fastapi import FastAPI, WebSocket, WebSocketDisconnect, status
-
-from pprint import pprint
 
 CLIENT_KEY = "12345"
 
@@ -26,8 +26,7 @@ BUFFER = []
 @app.get("/webhook")
 async def webhook():
     log.info("Adding message to queue")
-    queue.appendleft({"Open the pod bay doors hal ...": int(time.time())})
-    # BUFFER.append({"foo": int(time.time())})
+    queue.appendleft(Messages.REQ_DOOR_STATUS)
 
 
 def is_authorized(payload):
